@@ -1,0 +1,22 @@
+{
+  "name": "tailbuild",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "tailbuild": "./build.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.2.5",
+    "postcss": "^8.2.12",
+    "postcss-cli": "^8.3.1",
+    "tailwindcss": "^2.1.1"
+  },
+  "dependencies": {
+    "arg": "^5.0.0",
+    "chokidar": "^3.5.1",
+    "cssnano": "^5.0.1"
+  }
+}
