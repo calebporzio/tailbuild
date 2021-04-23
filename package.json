@@ -1,9 +1,9 @@
 {
     "name": "tailbuild",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A simple command to build a Tailwind CSS file for your project (with JIT compiling and watching).",
     "bin": {
-        "tailbuild": "./build.js"
+        "tailbuild": "./tailbuild.js"
     },
     "author": "Caleb Porzio",
     "license": "MIT",
