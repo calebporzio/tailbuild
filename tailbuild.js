@@ -4,7 +4,9 @@ let autoprefixer = require('autoprefixer')
 let tailwindcss = require('tailwindcss')
 let chokidar = require('chokidar')
 let postcss = require('postcss')
+let mkdirp = require('mkdirp')
 let chalk = require('chalk')
+let path = require('path')
 let arg = require('arg')
 let fs = require('fs')
 
@@ -55,6 +57,8 @@ if (shouldWatch) {
 
 function processCSS() {
     console.log(chalk.cyan('♻️ tailbuilding...'));
+
+    mkdirp.sync(path.dirname(output))
 
     postcss(processors)
         .process(css, { from: input, to: output })
