@@ -28,11 +28,13 @@ By adding `--production` tailbuild will minify the output CSS file.
 npx tailbuild dist/tailwind.css --purge="./public/**/*.html" --production
 ```
 
+### Framework Examples
 | Framework | Example Command |
 | --- | --- |
 | Laravel | `npx tailbuild public/css/app.css --purge="resources/views/**/*.blade.php"` |
 | [Your Favorite Framework] | [Open A PR!](https://github.com/calebporzio/tailbuild/pulls) |
 
+### Command Options
 | Options | Description |
 | --- | --- |
 | `-o, --output` | The file path to store tailbuild's output Tailwind CSS file |
