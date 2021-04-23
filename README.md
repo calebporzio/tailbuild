@@ -1,4 +1,4 @@
-# tailbuild
+# ♻️ tailbuild
 
 A simple command to build a JIT Tailwind CSS file for your project without all the fuss.
 
