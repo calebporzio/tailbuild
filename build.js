@@ -29,6 +29,8 @@ let production = args['--production']
 if (! output) throw new Error('Missing required output file: --output, -o, or first argument');
 if (purges.length === 0) throw new Error('Must provide at least one purge directory: --purge, -p');
 
+let chalk = require('chalk');
+
 if (process.env.NODE_ENV === 'production' || shouldMinify || production) {
     process.env.NODE_ENV = 'production'
 
@@ -43,9 +45,13 @@ if (shouldWatch) {
     let watcher = chokidar.watch(purges, {ignored: /[\/\\]\./})
 
     watcher.on('all', () => {
+        console.log(chalk.cyan('♻️ Tailbuilding... '));
+
         processCSS()
     })
 } else {
+    console.log(chalk.cyan('♻️ Tailbuilding...'));
+
     processCSS()
 }
 
@@ -73,8 +79,6 @@ function getConfig() {
 
     return {
         mode: 'jit',
-        purge: [
-            './index.html',
-        ],
+        purge: purges,
     }
 }
