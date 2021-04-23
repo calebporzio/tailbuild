@@ -44,3 +44,18 @@ npx tailbuild dist/tailwind.css --purge="./public/**/*.html" --production
 | `-c, --config` | Specify a custom Tailwind config file for reference when building the Tailwind CSS output file |
 | `-m, --minify` | Minify all CSS output files using [cssnano](https://github.com/cssnano/cssnano) |
 | `--production` | Minify all CSS output AND set NODE_ENV to "production" for other optimizations within Tailwind |
+
+### How It Works
+Tailbuild is extremely simple. It uses tailwind's [PostCSS](https://postcss.org/) plugin to build the CSS file and uses [chokidar](https://github.com/paulmillr/chokidar) to watch the files and re-run it when they change.
+
+If you prefer to source dive, there's only one file of code: [build.js](https://github.com/calebporzio/tailbuild/blob/main/build.js)
+
+The value this package adds is hiding all the wires you normally need to get a simple Tailwind, JIT-compiled, build file:
+- A source CSS file (for me this is usally just `@tailwind base`, etc...)
+- A `tailwind.config.js`, although you can optionally configure this
+- Having a bundler and importing PostCSS, autoprefixer, and the Tailwind plugin
+
+*Why not just use `tailwind-cli`?*
+It currently requires an input CSS file, a config file, AND doesn't support `--watch` or JIT compiling (Yet).
+
+## Enjoy!
