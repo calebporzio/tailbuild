@@ -9,28 +9,29 @@ let arg = require('arg')
 let fs = require('fs')
 
 let args = arg({
-    '--purge': [String],
+    '--files': [String],
     '--config': String,
     '--output': String,
     '--minify': Boolean,
     '--watch': Boolean,
     '--production': Boolean,
     '-c': '--config',
-    '-p': '--purge',
+    '-f': '--files',
     '-o': '--output',
     '-m': '--minify',
     '-w': '--watch',
+    '--purge': '--files',
 });
 
 let output = args['_'][0] || args['--output']
 let input = args['_'][1] || args['--input']
-let purges = args['--purge']
+let referenceFiles = args['--files']
 let shouldWatch = args['--watch']
 let shouldMinify = args['--minify']
 let production = args['--production']
 
 if (! output) throw new Error('Missing required output file: --output, -o, or first argument');
-if (purges.length === 0) throw new Error('Must provide at least one purge directory: --purge, -p');
+if (referenceFiles.length === 0) throw new Error('Must provide at least one purge file or directory: --files, -f');
 
 if (shouldWatch) process.env.TAILWIND_MODE = 'watch'
 
@@ -45,7 +46,7 @@ if (process.env.NODE_ENV === 'production' || shouldMinify || production) {
 let css = input ? fs.readFileSync(input) : '@tailwind base; @tailwind components; @tailwind utilities;'
 
 if (shouldWatch) {
-    chokidar.watch(purges, {ignored: /[\/\\]\./}).on('all', () => {
+    chokidar.watch(referenceFiles, {ignored: /[\/\\]\./}).on('all', () => {
         processCSS()
     })
 } else {
@@ -73,6 +74,6 @@ function getConfig() {
 
     return {
         mode: 'jit',
-        purge: purges,
+        purge: referenceFiles,
     }
 }

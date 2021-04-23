@@ -1,6 +1,6 @@
 {
     "name": "tailbuild",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "A simple command to build a Tailwind CSS file for your project (with JIT compiling and watching).",
     "bin": {
         "tailbuild": "./tailbuild.js"
