@@ -55,7 +55,4 @@ The value this package adds is hiding all the wires you normally need to get a s
 - A `tailwind.config.js`, although you can optionally configure this
 - Having a bundler and importing PostCSS, autoprefixer, and the Tailwind plugin
 
-*Why not just use `tailwind-cli`?*
-It currently requires an input CSS file, a config file, AND doesn't support `--watch` or JIT compiling (Yet).
-
 ## Enjoy!
