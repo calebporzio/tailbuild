@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
-const autoprefixer = require('autoprefixer')
-const chokidar = require('chokidar')
-const arg = require('arg');
-const fs = require('fs')
+let autoprefixer = require('autoprefixer')
+let tailwindcss = require('tailwindcss')
+let chokidar = require('chokidar')
+let postcss = require('postcss')
+let chalk = require('chalk')
+let arg = require('arg')
+let fs = require('fs')
 
 let args = arg({
     '--purge': [String],
@@ -29,7 +32,9 @@ let production = args['--production']
 if (! output) throw new Error('Missing required output file: --output, -o, or first argument');
 if (purges.length === 0) throw new Error('Must provide at least one purge directory: --purge, -p');
 
-let chalk = require('chalk');
+if (shouldWatch) process.env.TAILWIND_MODE = 'watch'
+
+let processors = [tailwindcss({ config: getConfig() }), autoprefixer]
 
 if (process.env.NODE_ENV === 'production' || shouldMinify || production) {
     process.env.NODE_ENV = 'production'
@@ -40,26 +45,15 @@ if (process.env.NODE_ENV === 'production' || shouldMinify || production) {
 let css = input ? fs.readFileSync(input) : '@tailwind base; @tailwind components; @tailwind utilities;'
 
 if (shouldWatch) {
-    process.env.TAILWIND_MODE = 'watch'
-
-    let watcher = chokidar.watch(purges, {ignored: /[\/\\]\./})
-
-    watcher.on('all', () => {
-        console.log(chalk.cyan('♻️ Tailbuilding... '));
-
+    chokidar.watch(purges, {ignored: /[\/\\]\./}).on('all', () => {
         processCSS()
     })
 } else {
-    console.log(chalk.cyan('♻️ Tailbuilding...'));
-
     processCSS()
 }
 
 function processCSS() {
-    const tailwindcss = require('tailwindcss')
-    const postcss = require('postcss')
-
-    let processors = [tailwindcss({ config: getConfig() }), autoprefixer]
+    console.log(chalk.cyan('♻️ tailbuilding...'));
 
     postcss(processors)
         .process(css, { from: input, to: output })
