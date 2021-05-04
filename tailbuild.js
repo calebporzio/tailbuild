@@ -17,6 +17,7 @@ let args = arg({
     '--minify': Boolean,
     '--watch': Boolean,
     '--production': Boolean,
+    '--postcss': String,
     '-c': '--config',
     '-f': '--files',
     '-o': '--output',
@@ -31,13 +32,24 @@ let referenceFiles = args['--files']
 let shouldWatch = args['--watch']
 let shouldMinify = args['--minify']
 let production = args['--production']
+let postcssConfig = args['--postcss']
 
 if (! output) throw new Error('Missing required output file: --output, -o, or first argument');
 if (referenceFiles.length === 0) throw new Error('Must provide at least one purge file or directory: --files, -f');
 
 if (shouldWatch) process.env.TAILWIND_MODE = 'watch'
 
-let processors = [tailwindcss({ config: getConfig() }), autoprefixer]
+let processors = []
+
+if (postcssConfig) {
+  const postcssConfigFile = require(postcssConfig)
+
+  if (Array.isArray(postcssConfigFile.plugins) && postcssConfigFile?.plugins?.length) {
+    processors = [...postcssConfigFile.plugins]
+  }
+}
+
+processors = [...processors, tailwindcss({config: getConfig()}), autoprefixer]
 
 if (process.env.NODE_ENV === 'production' || shouldMinify || production) {
     process.env.NODE_ENV = 'production'
