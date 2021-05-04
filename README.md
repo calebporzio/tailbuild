@@ -28,6 +28,13 @@ By adding `--production` tailbuild will minify the output CSS file.
 npx tailbuild dist/tailwind.css --files="./public/**/*.html" --production
 ```
 
+### PostCSS Config
+Add `--postcss` with a path to insert additional PostCSS plugins.
+
+```bash
+npx tailbuild dist/tailwind.css --postcss="./postcss.config.js"
+```
+
 ### Framework Examples
 | Framework | Example Command |
 | --- | --- |
@@ -44,6 +51,7 @@ npx tailbuild dist/tailwind.css --files="./public/**/*.html" --production
 | `-c, --config` | Specify a custom Tailwind config file for reference when building the Tailwind CSS output file |
 | `-m, --minify` | Minify all CSS output files using [cssnano](https://github.com/cssnano/cssnano) |
 | `--production` | Minify all CSS output AND set NODE_ENV to "production" for other optimizations within Tailwind |
+| `--postcss` | Path to a `postcss.config.js` file to insert additional plugins |
 
 ### How It Works
 
