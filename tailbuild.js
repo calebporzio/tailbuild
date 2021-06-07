@@ -28,7 +28,7 @@ let args = arg({
 });
 
 let output = args['_'][0] || args['--output']
-let input = args['_'][1] || args['--input']
+let input = args['--input']
 let referenceFiles = args['--files']
 let shouldWatch = args['--watch']
 let shouldMinify = args['--minify']
